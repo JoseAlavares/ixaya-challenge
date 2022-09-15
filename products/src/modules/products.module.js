@@ -9,16 +9,15 @@ const { Responder } = require('cote')
 const productResponder = new Responder({
     name: config.microservicesNameSpaces.product.name,
     key: config.microservicesNameSpaces.product.key,
-    port: 8111
 })
 
 // Models
 const { ProductCatalogueModel } = require('../models/product-catalogue.model')
 
-productResponder.on(config.microservicesNameSpaces.product.types.getProducts, async (req, callback) => {
+productResponder.on('get-products'/*config.microservicesNameSpaces.product.types.getProducts*/, async (req, callback) => {
     delete req.type
-
     try {
+        console.log('si llego')
         const products = await ProductCatalogueModel.find({})
         return products
     } catch (error) {

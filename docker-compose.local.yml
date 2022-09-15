@@ -29,8 +29,8 @@ services:
         - '9242:9229'
         volumes:
         - ./api-gateway/src/:/home/node/app/src
-        depends_on:
-        - mongo-db-ixaya
+        # depends_on:
+        # - mongo-db-ixaya
         build:
           context: ./api-gateway
           dockerfile: ./Dockerfile.dev
@@ -47,8 +47,8 @@ services:
         - MONGO_DB_NAME=ixaya
         # - MONGO_DB_USER=jalvarez
         # - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
-        ports:
-        - '4001:3001'
+        # ports:
+        # - '4001:3001'
         volumes:
         - ./orders/src:/home/node/app/src
         depends_on:
@@ -69,8 +69,8 @@ services:
         - MONGO_DB_NAME=ixaya
         # - MONGO_DB_USER=jalvarez
         # - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
-        ports:
-        - '4002:3002'
+        # ports:
+        # - '4002:3002'
         volumes:
         - ./products/src:/home/node/app/src
         depends_on:

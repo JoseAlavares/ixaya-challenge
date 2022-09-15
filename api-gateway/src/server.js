@@ -9,6 +9,7 @@ const express = require('express')
 // Constants
 const app = express()
 app.use('/api/product', require('./network/products'))
+app.use('/api/order', require('./network/orders'))
 
 app.get('/', (req, resp) => {
     return resp.status(200).json('Api Gateway ready')

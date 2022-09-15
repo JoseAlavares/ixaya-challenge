@@ -1,7 +1,7 @@
 'use strict'
 
 // Packages
-const cote = require('cote')
+const { Requester } = require('cote')
 const router = require('express').Router()
 const { isNil } = require('lodash')
 const dayjs = require('dayjs')
@@ -11,9 +11,10 @@ const { config } = require('../../config/environment')
 const { logger } = require('../../middlewares/logger')
 
 // Constants
-const requesterProducts = new cote.Requester({ 
-    name: config.microservicesNameSpaces.products.name, 
-    key: config.microservicesNameSpaces.products.key
+const requesterProducts = new Requester({
+    name: config.microservicesNameSpaces.products.name,
+    key: config.microservicesNameSpaces.products.key,
+    // namespace: config.microservicesNameSpaces.products.key,
 })
 
 router.get('/', async (request, response) => {
@@ -23,6 +24,7 @@ router.get('/', async (request, response) => {
         dateFilter = dayjs(request.query.date)
 
     try {
+        console.log('si llego')
         const result = await requesterProducts.send({
             type: config.microservicesNameSpaces.products.types.getProducts,
             _request: dateFilter

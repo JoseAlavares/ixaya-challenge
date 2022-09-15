@@ -7,15 +7,14 @@ const { Responder } = require('cote')
 
 // Constants
 const orderResponder = new Responder({
-    name: config.microservicesNameSpaces.product.name,
-    key: config.microservicesNameSpaces.product.key,
-    // port: 8112
+    name: config.microservicesNameSpaces.orders.name,
+    key: config.microservicesNameSpaces.orders.key
 })
 
 // Models
 const { OrderModel } = require('../models/order.model')
 
-orderResponder.on(config.microservicesNameSpaces.order.types.getOrder, async (req, callback) => {
+orderResponder.on(config.microservicesNameSpaces.orders.types.getOrders, async (req, callback) => {
     delete req.type
 
     try {

@@ -1,10 +1,10 @@
 const config = {
     microservicesNameSpaces: {
-        order: {
-            name: 'responder_order',
-            key: 'order',
+        orders: {
+            name: 'responder_orders',
+            key: 'orders',
             types: {
-                getOrder: 'get-orders'
+                getOrders: 'get-orders'
             }
         }
     }
