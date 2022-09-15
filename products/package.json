@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "cote": "^1.0.2",
     "mongoose": "^6.6.1",
+    "mongoose-seed": "^0.6.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
