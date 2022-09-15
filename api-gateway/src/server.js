@@ -1,9 +1,17 @@
-const express = require('express')
-const app = express()
+'use strict'
 
-app.use('/api/v1')
+// Modules
+const { config } = require('./config/environment')
+
+// Packages
+const express = require('express')
+
+// Constants
+const app = express()
+// const router = 
+
 app.get('/', (req, resp) => {
-    return resp.status(200).json('ok')
+    return resp.status(200).json('Api Gateway ready')
 })
 
-app.listen(() => console.log('Api Gateway'), process.env.PORT)
+app.listen(() => console.log('Api Gateway'), config.environment.appPort)
