@@ -1,5 +1,6 @@
 // Modules
 const { config } = require('../config/environment')
+const { logger } = require('../middlewares/logger')
 
 // Packages
 const { Responder } = require('cote')
@@ -21,7 +22,7 @@ productResponder.on(config.microservicesNameSpaces.product.types.getProducts, as
         const products = await ProductCatalogueModel.find({})
         return products
     } catch (error) {
-        // logger.erro({ message: 'Couldn't get the products from the collection in mongo', meta: error })
+        logger.log('error', `Couldn't get the products from the collection in mongo`)
         return null
     }
 })
