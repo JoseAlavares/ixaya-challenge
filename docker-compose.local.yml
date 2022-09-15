@@ -1,0 +1,84 @@
+version: '3.8'
+services:
+    #Databases
+    mongo-db-ixaya:
+        image: mongo:4.1.8-xenial
+        container_name: mongo-db-ixaya
+        restart: unless-stopped
+        environment:
+        # - MONGO_INITDB_ROOT_USERNAME=admin
+        # - MONGO_INITDB_ROOT_PASSWORD=admin
+        - MONGO_INITDB_DATABASE=ixaya
+        networks:
+        - ixaya
+        ports:
+        - "27018:27017"
+
+    #Api gateway
+    api-ixaya:
+        image: jalvarez/ixaya-api-gateway:local
+        container_name: ixaya-api-gateway
+        restart: unless-stopped
+        environment:
+        - API_KEY=1
+        ports:
+        - '4000:3000'
+        - '9242:9229'
+        volumes:
+        - ./api-gateway/src/:/home/node/app/src
+        depends_on:
+        - mongo-db-ixaya
+        build:
+          context: ./api-gateway
+          dockerfile: ./Dockerfile.dev
+        networks:
+        - ixaya
+
+    #Microservices
+    orders:
+        image: jalvarez/ixaya-orders:local
+        container_name: ixaya-orders
+        restart: unless-stopped
+        environment:
+        - MONGO_DB_HOST=mongo-db
+        - MONGO_DB_NAME=forms
+        - MONGO_DB_USER=jalvarez
+        - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
+        ports:
+        - '4001:3001'
+        volumes:
+        - ./orders/src:/home/node/app/src
+        depends_on:
+        - api-ixaya
+        - mongo-db-ixaya
+        build:
+          context: ./orders
+          dockerfile: ./Dockerfile.dev
+        networks:
+        - ixaya
+
+    products:
+        image: jalvarez/ixaya-proucts:local
+        container_name: ixaya-products
+        restart: unless-stopped
+        environment:
+        - MONGO_DB_HOST=mongo-db
+        - MONGO_DB_NAME=forms
+        - MONGO_DB_USER=jalvarez
+        - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
+        ports:
+        - '4002:3002'
+        volumes:
+        - ./products/src:/home/node/app/src
+        depends_on:
+        - api-ixaya
+        - mongo-db-ixaya
+        build:
+          context: ./products
+          dockerfile: ./Dockerfile.dev
+        networks:
+        - ixaya
+
+networks:
+    ixaya:
+        driver: bridge
