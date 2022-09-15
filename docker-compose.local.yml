@@ -22,6 +22,8 @@ services:
         environment:
         - API_KEY=1
         - PORT=3000
+        # - MONGO_DB_HOST=localhost
+        # - MONGO_DB_NAME=ixaya
         ports:
         - '4000:3000'
         - '9242:9229'
@@ -41,10 +43,10 @@ services:
         container_name: ixaya-orders
         restart: unless-stopped
         environment:
-        - MONGO_DB_HOST=mongo-db
-        - MONGO_DB_NAME=forms
-        - MONGO_DB_USER=jalvarez
-        - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
+        - MONGO_DB_HOST=mongo-db-ixaya
+        - MONGO_DB_NAME=ixaya
+        # - MONGO_DB_USER=jalvarez
+        # - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
         ports:
         - '4001:3001'
         volumes:
@@ -63,10 +65,10 @@ services:
         container_name: ixaya-products
         restart: unless-stopped
         environment:
-        - MONGO_DB_HOST=mongo-db
-        - MONGO_DB_NAME=forms
-        - MONGO_DB_USER=jalvarez
-        - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
+        - MONGO_DB_HOST=mongo-db-ixaya
+        - MONGO_DB_NAME=ixaya
+        # - MONGO_DB_USER=jalvarez
+        # - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
         ports:
         - '4002:3002'
         volumes:

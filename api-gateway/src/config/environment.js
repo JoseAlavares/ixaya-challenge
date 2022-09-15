@@ -8,6 +8,7 @@ const config = {
     microservicesNameSpaces: {
         products: {
             name: 'products',
+            key: 'products',
             types: {
                 getProducts: 'get-products'
             }

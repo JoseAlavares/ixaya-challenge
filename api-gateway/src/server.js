@@ -8,10 +8,10 @@ const express = require('express')
 
 // Constants
 const app = express()
-// const router = 
+app.use('/api/product', require('./network/products'))
 
 app.get('/', (req, resp) => {
     return resp.status(200).json('Api Gateway ready')
 })
 
-app.listen(() => console.log('Api Gateway'), config.environment.appPort)
+app.listen(config.environment.appPort, () => console.log('Api Gateway'))

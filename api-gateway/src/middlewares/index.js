@@ -2,17 +2,8 @@
 
 const { config } = require('../config/environment')
 const { isNil } = require("lodash")
+const { createLogger, format, transports } = require('winston');
 
-const apiResponse = (message, httpCode, data = null) => {
-    return (request, response, next) => {
-        response.status(httpCode).json({
-            timestamp: new Date().toISOString(),
-            message,
-            data
-        })
-        next()
-    }
-}
 
 const validApiKey = (request, response, next) => {
     if (isNil(request.headers['x-api-key']) || request.headers['x-api-key'] !== config.environment.apiKey)
@@ -22,6 +13,5 @@ const validApiKey = (request, response, next) => {
 }
 
 module.exports = {
-    apiResponse,
     validApiKey
 }
