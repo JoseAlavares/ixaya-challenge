@@ -393,7 +393,7 @@ const sold = [{
     'created_at': '2020-01-11T13:00:00'
 }, {
     'product_id': 13,
-    'quantity_sold': 283,
+    'quantity_sold': 1283,
     'active': true,
     'created_at': '2020-01-11T13:00:00'
 }, {

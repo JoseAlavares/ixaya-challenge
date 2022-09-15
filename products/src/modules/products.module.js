@@ -7,21 +7,24 @@ const { Responder } = require('cote')
 
 // Constants
 const productResponder = new Responder({
-    name: config.microservicesNameSpaces.product.name,
-    key: config.microservicesNameSpaces.product.key,
+    name: config.microservicesNameSpaces.products.name,
+    key: config.microservicesNameSpaces.products.key,
 })
 
 // Models
-const { ProductCatalogueModel } = require('../models/product-catalogue.model')
+const { SoldProductModel } = require('../models/sold-products.model')
 
-productResponder.on('get-products'/*config.microservicesNameSpaces.product.types.getProducts*/, async (req, callback) => {
+productResponder.on(config.microservicesNameSpaces.products.types.getProducts, async (req, callback) => {
     delete req.type
     try {
-        console.log('si llego')
-        const products = await ProductCatalogueModel.find({})
+        const products = await SoldProductModel.aggregate([
+            { $lookup: { from: 'product-catalogues', localField: 'product_id', foreignField: 'product_id', as: 'product' } },
+            { $sort: { quantity_sold: -1 } },
+            { $limit: 5}
+        ])
         return products
     } catch (error) {
-        logger.log('error', `Couldn't get the products from the collection in mongo`)
+        logger.log('error', `Couldn't get the products from the collection in mongo`, error)
         return null
     }
 })

@@ -1,12 +1,12 @@
 const config = {
     microservicesNameSpaces: {
-        product: {
-            name: 'responder_product',
+        products: {
+            name: 'requester_products',
             key: 'products',
             types: {
                 getProducts: 'get-products'
             }
-        }
+        },
     }
 }
 

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const SchemaProductCatalogue = new mongoose.Schema({
+    product_id: {
+        type: Number,
+        required: true
+    },
     product_name: {
         type: String,
         required: true
@@ -8,6 +12,11 @@ const SchemaProductCatalogue = new mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    currency: {
+        type: String,
+        required: true,
+        default: 'dls'
     },
     type_product: {
         type: String,
