@@ -29,13 +29,14 @@ userResponder.on(config.microservicesNameSpaces.users.types.getUsers, async (req
 userResponder.on(config.microservicesNameSpaces.users.types.loginUser, async (req, callback) => {
     delete req.type
 
-
     try {
-        const user = await UserModel.findOne({ user: req.user, active: true }).select(['_id', 'user_id', 'user', 'name', 'password'])
+        const { _id, user_id, user, name , password } = await UserModel.findOne({
+            user: req.user, active: true 
+        }).select(['_id', 'user_id', 'user', 'name', 'password'])
 
-        if (user && validatePassword(req.password, user.password)) {
-            const token = await generateToken(user._id, user.user)
-            return { user, token }
+        if (user && validatePassword(req.password, password)) {
+            const token = await generateToken(_id, user)
+            return { _id, user_id, user, name, token }
         }
 
         return null

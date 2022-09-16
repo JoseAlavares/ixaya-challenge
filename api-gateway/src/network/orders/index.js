@@ -17,7 +17,12 @@ const requesterOrders = new cote.Requester({
 
 router.get('/', async (request, response) => {
     try {
-        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrders })
+        if (isNil(request.query?.user_id))
+            return response.status(400).json({ message: 'Bad request' })
+
+        const userIdFilter = request.query.user_id
+
+        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrdersByUser, userIdFilter })
 
         if (!isNil(result))
             return response.status(200).json(result)
@@ -25,6 +30,41 @@ router.get('/', async (request, response) => {
         logger.log('warn' `Couldn't get the orders from the microservice orders`)
         return response.status(500).json({ message: 'Internal server error' })
     } catch (error) {
+        logger.log('error', `Couldn't get the orders from the microservice orders`, error)
+        return response.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+router.get('/list_record', async (request, response) => {
+    try {
+        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrdersListRecord })
+
+        if (!isNil(result))
+            return response.status(200).json(result)
+
+        logger.log('warn' `Couldn't get the orders from the microservice orders`)
+        return response.status(500).json({ message: 'Internal server error' })
+    } catch (error) {
+        logger.log('error', `Couldn't get the orders from the microservice orders`, error)
+        return response.status(500).json({ message: 'Internal server error' })
+    }
+})
+router.post('/detail', async (request, response) => {
+    if (isNil(request.body?.order_id))
+        return response.status(400).json({ message: 'Bad request' })
+
+    const orderId = request.body.order_id
+
+    try {
+        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrderDetail, orderId })
+
+        if (!isNil(result))
+            return response.status(200).json(result)
+
+        logger.log('warn', `Couldn't get the orders from the microservice orders`)
+        return response.status(500).json({ message: 'Internal server error' })
+    } catch (error) {
+        console.error(error)
         logger.log('error', `Couldn't get the orders from the microservice orders`, error)
         return response.status(500).json({ message: 'Internal server error' })
     }

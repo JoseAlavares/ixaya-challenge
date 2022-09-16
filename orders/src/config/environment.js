@@ -4,7 +4,9 @@ const config = {
             name: 'responder_orders',
             key: 'orders',
             types: {
-                getOrders: 'get-orders'
+                getOrdersByUser: 'get-orders-by-user',
+                getOrdersListRecord: 'get-orders-list-record',
+                getOrderDetail: 'get-order-detail'
             }
         }
     }

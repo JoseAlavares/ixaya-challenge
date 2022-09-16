@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const SchemaOrder = new mongoose.Schema({
+    user_id: {
+        type: Number,
+        required: true
+    },
     street_name: {
         type: String,
         required: true

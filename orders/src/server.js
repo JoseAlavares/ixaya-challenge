@@ -16,3 +16,4 @@ mongoose.connect(URI, {
 .catch(err => console.error('Error in the mongodb connection', err))
 
 require('./modules/orders.module')
+require('./db-init')
