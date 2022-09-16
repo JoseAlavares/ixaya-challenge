@@ -97,7 +97,7 @@ router.post('/', async (request, response) => {
         return response.status(500).json({ message: 'Internal server error' })
     } catch (error) {
         console.error(error)
-        // logger.log('error', `Couldn't create a order`, error)
+        logger.log('error', `Couldn't create a order`, error)
         return response.status(500).json({ message: 'Internal server error' })
     }
 })
