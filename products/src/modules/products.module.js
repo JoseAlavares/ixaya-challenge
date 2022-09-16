@@ -1,19 +1,25 @@
 // Modules
 const { config } = require('../config/environment')
 const { logger } = require('../middlewares/logger')
+const { startSession } = require('mongoose')
 
 // Packages
-const { Responder } = require('cote')
+const { Responder, Subscriber } = require('cote')
 
 // Constants
 const productResponder = new Responder({
     name: config.microservicesNameSpaces.products.name,
     key: config.microservicesNameSpaces.products.key,
 })
+const proudctSubscriber = new Subscriber({
+    name: 'proudct-subscriber',
+    key: 'products'
+})
 
 // Models
 const { SoldProductModel } = require('../models/sold-products.model')
 
+// Action to get products
 productResponder.on(config.microservicesNameSpaces.products.types.getProducts, async (req, callback) => {
     delete req.type
     try {
@@ -26,5 +32,30 @@ productResponder.on(config.microservicesNameSpaces.products.types.getProducts, a
     } catch (error) {
         logger.log('error', `Couldn't get the products from the collection in mongo`, error)
         return null
+    }
+})
+
+// Subscribers
+proudctSubscriber.on('update-quantity', async (req) => {
+    const session = await startSession()
+
+    try {
+        console.log('subscriber products', req)
+        session.startTransaction()
+
+        req?.product_list.forEach(product => {
+            const { product_id, qty} = product
+            SoldProductModel.findOneAndUpdate(
+                { product_id: product_id },
+                { $inc: { quantity_sold: qty } }
+            ).catch(err => console.error)
+        })
+
+        await session.commitTransaction()
+    } catch (error) {
+        await session.abortTransaction()
+        logger.log('error', 'Coudl`nt update the quantity sold in the products', error)
+    } finally {
+        session.endSession()
     }
 })

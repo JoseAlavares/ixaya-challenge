@@ -8,6 +8,7 @@ const { isNil } = require('lodash')
 // Modules
 const { config } = require('../../config/environment')
 const { logger } = require('../../middlewares/logger')
+const { validatorCreateOrder } = require('../../validators/validator-create-order')
 
 // Constants
 const requesterOrders = new cote.Requester({
@@ -22,7 +23,10 @@ router.get('/', async (request, response) => {
 
         const userIdFilter = request.query.user_id
 
-        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrdersByUser, userIdFilter })
+        const result = await requesterOrders.send({ 
+            type: config.microservicesNameSpaces.orders.types.getOrdersByUser,
+            userIdFilter
+        })
 
         if (!isNil(result))
             return response.status(200).json(result)
@@ -37,7 +41,9 @@ router.get('/', async (request, response) => {
 
 router.get('/list_record', async (request, response) => {
     try {
-        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrdersListRecord })
+        const result = await requesterOrders.send({
+            type: config.microservicesNameSpaces.orders.types.getOrdersListRecord
+        })
 
         if (!isNil(result))
             return response.status(200).json(result)
@@ -49,6 +55,7 @@ router.get('/list_record', async (request, response) => {
         return response.status(500).json({ message: 'Internal server error' })
     }
 })
+
 router.post('/detail', async (request, response) => {
     if (isNil(request.body?.order_id))
         return response.status(400).json({ message: 'Bad request' })
@@ -56,7 +63,10 @@ router.post('/detail', async (request, response) => {
     const orderId = request.body.order_id
 
     try {
-        const result = await requesterOrders.send({ type: config.microservicesNameSpaces.orders.types.getOrderDetail, orderId })
+        const result = await requesterOrders.send({
+            type: config.microservicesNameSpaces.orders.types.getOrderDetail,
+            orderId
+        })
 
         if (!isNil(result))
             return response.status(200).json(result)
@@ -70,4 +80,25 @@ router.post('/detail', async (request, response) => {
     }
 })
 
+router.post('/', async (request, response) => {
+    const { body } = request
+    body.active = true
+    body.created_at = new Date()
+    console.log(body)
+    try {
+        const result = await requesterOrders.send({
+            type: config.microservicesNameSpaces.orders.types.createOrder,
+             ...body
+        })
+
+        if (result)
+            return response.status(201).json({ message: 'Created' })
+
+        return response.status(500).json({ message: 'Internal server error' })
+    } catch (error) {
+        console.error(error)
+        // logger.log('error', `Couldn't create a order`, error)
+        return response.status(500).json({ message: 'Internal server error' })
+    }
+})
 module.exports = router

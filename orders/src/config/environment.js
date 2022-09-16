@@ -6,7 +6,8 @@ const config = {
             types: {
                 getOrdersByUser: 'get-orders-by-user',
                 getOrdersListRecord: 'get-orders-list-record',
-                getOrderDetail: 'get-order-detail'
+                getOrderDetail: 'get-order-detail',
+                createOrder: 'create-order'
             }
         }
     }
