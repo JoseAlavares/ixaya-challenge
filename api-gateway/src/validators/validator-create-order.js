@@ -1,4 +1,5 @@
 const joi = require('joi')
+const { logger } = require('../middlewares/logger')
 
 const schema = joi.object({
     user_id: joi.number().required(),
@@ -21,7 +22,7 @@ const validatorCreateOrder = (req, resp, next) => {
     const { error } = schema.validate(body)
 
     if (error) {
-        console.error(error)
+        logger.log('warn', 'Exists errors in the body request', errors)
         let errors = error.details.map(e => e.message)
         return resp.status(400).json({
             message: 'Bad request',

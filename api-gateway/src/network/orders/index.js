@@ -74,7 +74,6 @@ router.post('/detail', async (request, response) => {
         logger.log('warn', `Couldn't get the orders from the microservice orders`)
         return response.status(500).json({ message: 'Internal server error' })
     } catch (error) {
-        console.error(error)
         logger.log('error', `Couldn't get the orders from the microservice orders`, error)
         return response.status(500).json({ message: 'Internal server error' })
     }
@@ -84,7 +83,7 @@ router.post('/', async (request, response) => {
     const { body } = request
     body.active = true
     body.created_at = new Date()
-    console.log(body)
+
     try {
         const result = await requesterOrders.send({
             type: config.microservicesNameSpaces.orders.types.createOrder,
