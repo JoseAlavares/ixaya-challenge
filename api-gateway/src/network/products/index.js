@@ -24,7 +24,6 @@ router.get('/', async (request, response) => {
         dateFilter = dayjs(request.query.date)
 
     try {
-        console.log('si llego')
         const result = await requesterProducts.send({
             type: config.microservicesNameSpaces.products.types.getProducts,
             _request: dateFilter
