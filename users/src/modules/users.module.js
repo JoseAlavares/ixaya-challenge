@@ -15,6 +15,7 @@ const userResponder = new Responder({
 // Models
 const { UserModel } = require('../models/user.model')
 
+// Action to get users from the DB
 userResponder.on(config.microservicesNameSpaces.users.types.getUsers, async (req, callback) => {
     delete req.type
     try {
@@ -26,6 +27,7 @@ userResponder.on(config.microservicesNameSpaces.users.types.getUsers, async (req
     }
 })
 
+// Action to sign in  a user
 userResponder.on(config.microservicesNameSpaces.users.types.loginUser, async (req, callback) => {
     delete req.type
 
