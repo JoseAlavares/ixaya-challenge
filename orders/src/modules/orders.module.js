@@ -11,11 +11,9 @@ const orderResponder = new Responder({
     key: config.microservicesNameSpaces.orders.key
 })
 const productPublisher = new Publisher({
-    name: 'proudct-publisher',
-    // namespace: 'rnd',
-    key: 'products',
-    // broadcasts: ['randomUpdate'],
-});
+    name: config.publishersAndSubscribers.products.name,
+    key: config.publishersAndSubscribers.products.key,
+})
 
 
 // Models
@@ -69,7 +67,11 @@ orderResponder.on(config.microservicesNameSpaces.orders.types.createOrder, async
     try {
         const newOrder = new OrderModel(req)
         const order = await newOrder.save(req)
-        productPublisher.publish('update-quantity', order, 5000)
+        productPublisher.publish(
+            config.publishersAndSubscribers.products.types.updateSoldQuantity,
+            order,
+            5000
+        )
         logger.log('info', `The order ${order._id} was created successful`)
         return order
     } catch (error) {

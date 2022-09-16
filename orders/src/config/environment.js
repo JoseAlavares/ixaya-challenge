@@ -10,6 +10,15 @@ const config = {
                 createOrder: 'create-order'
             }
         }
+    },
+    publishersAndSubscribers: {
+        products: {
+            name: 'publisher-products',
+            key: 'products',
+            types: {
+                updateSoldQuantity :'update-sold-quantity'
+            }
+        }
     }
 }
 

@@ -12,8 +12,8 @@ const productResponder = new Responder({
     key: config.microservicesNameSpaces.products.key,
 })
 const proudctSubscriber = new Subscriber({
-    name: 'proudct-subscriber',
-    key: 'products'
+    name: config.publishersAndSubscribers.products.name,
+    key: config.publishersAndSubscribers.products.key
 })
 
 // Models
@@ -36,11 +36,11 @@ productResponder.on(config.microservicesNameSpaces.products.types.getProducts, a
 })
 
 // Subscribers
-proudctSubscriber.on('update-quantity', async (req) => {
+// Subscriber ti update the sold quantity in the products when a order is created
+proudctSubscriber.on(config.publishersAndSubscribers.products.types.updateSoldQuantity, async (req) => {
     const session = await startSession()
 
     try {
-        console.log('subscriber products', req)
         session.startTransaction()
 
         req?.product_list.forEach(product => {

@@ -7,6 +7,15 @@ const config = {
                 getProducts: 'get-products'
             }
         },
+    },
+    publishersAndSubscribers: {
+        products: {
+            name: 'subscriber-products',
+            key: 'products',
+            types: {
+                updateSoldQuantity :'update-sold-quantity'
+            }
+        }
     }
 }
 
