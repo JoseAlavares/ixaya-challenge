@@ -1,0 +1,24 @@
+{
+    "name": "users-microservice",
+    "version": "1.0.0",
+    "description": "Challenge for ixaya",
+    "main": "server.js",
+    "scripts": {
+      "test": "mocha src/test/*.test.js --timeout 20000"
+    },
+    "author": "Jose Francisco Alvarez Valdez<alvaresvaldes89@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+      "body-parser": "^1.19.0",
+      "cors": "^2.8.5",
+      "cote": "^1.0.2",
+      "mongoose": "^6.6.1",
+      "mongoose-seed": "^0.6.0",
+      "winston": "^3.8.2"
+    },
+    "devDependencies": {
+      "chai": "^4.3.4",
+      "chai-http": "^4.3.0"
+    }
+  }
+  

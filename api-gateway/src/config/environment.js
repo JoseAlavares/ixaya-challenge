@@ -19,6 +19,15 @@ const config = {
             types: {
                 getOrders: 'get-orders'
             }
+        },
+        users: {
+            name: 'requester_users',
+            key: 'users',
+            types: {
+                getUsers: 'get-users',
+                createUser: 'create-user',
+                loginUser: 'login-user'
+            }
         }
     }
 }
