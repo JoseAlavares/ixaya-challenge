@@ -18,7 +18,7 @@ services:
         container_name: ixaya-api-gateway
         restart: unless-stopped
         environment:
-        - API_KEY=1
+        - API_KEY=kkkcc4o4gsko8w0wg084k4o8s4wggwcosk8okgw4
         - PORT=3000
         ports:
         - '4000:3000'
@@ -76,10 +76,6 @@ services:
         - MONGO_DB_HOST=mongo-db-ixaya
         - MONGO_DB_NAME=ixaya
         - JWT_PASSWORD=fdjan8329cb"53
-        # - MONGO_DB_USER=jalvarez
-        # - MONGO_DB_PASSWORD=WT8j596KaSYBKR3L
-        # ports:
-        # - '4002:3002'
         volumes:
         - ./users/src:/home/node/app/src
         depends_on:
@@ -88,6 +84,23 @@ services:
         build:
           context: ./users
           dockerfile: ./Dockerfile.dev
+        networks:
+        - ixaya
+
+    frontend:
+        image: jalvarez/ixaya-front-end:local
+        container_name: ixaya-front-end
+        environment:
+        - REACT_APP_DOMAIN=http://localhost:3000
+        - REACT_APP_API_KEY=kkkcc4o4gsko8w0wg084k4o8s4wggwcosk8okgw4
+        - CHOKIDAR_USEPOLLING: true
+        build:
+          context: ./front-end
+          dockerfile: ./Dockerfile.dev
+        ports:
+          - 8888:8000
+        volumes:
+          - ./src/front-end:/app/src
         networks:
         - ixaya
 

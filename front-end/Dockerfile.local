@@ -1,0 +1,11 @@
+FROM node:14.16.0
+LABEL maintainer="Jose Francisco Alvarez<alvaresvaldes89@gmail.com>"
+RUN mkdir -p /app/node_modules
+RUN mkdir -p /app/src
+RUN mkdir -p /app/public && chown -R node:node /app
+WORKDIR /app
+COPY package*.json ./
+ADD public /app/public
+RUN npm install react-scripts@3.4.0 -g --silent
+RUN npm install
+CMD npm run start
