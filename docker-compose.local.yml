@@ -90,6 +90,7 @@ services:
     frontend:
         image: jalvarez/ixaya-front-end:local
         container_name: ixaya-front-end
+        restart: unless-stopped
         environment:
         - REACT_APP_DOMAIN=http://localhost:3000
         - REACT_APP_API_KEY=kkkcc4o4gsko8w0wg084k4o8s4wggwcosk8okgw4
@@ -99,8 +100,8 @@ services:
           dockerfile: ./Dockerfile.dev
         ports:
           - 8888:8000
-        volumes:
-          - ./src/front-end:/app/src
+        # volumes:
+        #   - /Users/ulfix/Documents/docker-containers/ixaya-challenge/front-end/src:/app/src
         networks:
         - ixaya
 

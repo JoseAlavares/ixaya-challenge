@@ -6,8 +6,6 @@ import {
 export const loginState = atom({
     key: 'loginState',
     default: {
-        user: "",
-        password: "",
         loading: false,
         errorText: null,
         disableBtn: false,

@@ -2,25 +2,32 @@ import axios from 'axios'
 
 const BACKEND_URL = process.env.REACT_APP_DOMAIN;
 const API_KEY = process.env.REACT_APP_API_KEY;
-
-export async function getUsersService() { 
-    const TOKEN = window.sessionStorage.getItem("jwt");
-    console.log(TOKEN)   
-    let headers = {"Content-Type": "application/json"};
-    
-    if(TOKEN) {
-        headers["Authorization"] = `Bearer ${TOKEN}`;
+const TOKEN = window.sessionStorage.getItem("jwt");
+const axiosLoginInstance = axios.create({
+    baseURL: BACKEND_URL,
+    headers: {
+        "Content-Type": "application/json",
+        "x-api-key": `ApiKey ${API_KEY}`,
     }
-    try {
-        const result = await axios({
-            method: "GET",
-            url: `${BACKEND_URL}/api/users`,
-            headers: headers
-        });
-        
-        const {data} = result;
-        return {data: data};
+});
+const axiosUserInstance = axios.create({
+    baseURL: BACKEND_URL,
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${TOKEN}`,
+    }
+})
 
+export async function getUsersService() {
+    let headers = {"Content-Type": "application/json"};
+
+    if(TOKEN)
+        headers["Authorization"] = `Bearer ${TOKEN}`;
+
+    try {
+        const { data } = await axiosUserInstance.get('/api/users');
+
+        return { data };
     } catch(err) {
         console.error(err.message);
         return {
@@ -30,30 +37,21 @@ export async function getUsersService() {
     }
 }
 
-export async function login(user, password) {
+export async function loginService(user, password) {
     try {
-        const result = await axios({
-            method: "POST",
-            url: `${BACKEND_URL}/auth/signin`,
-            data: {
-                user: user,
-                password: password
-            },
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `ApiKey ${API_KEY}`,				
-            }
-        })
+        const { data } = await axiosUserInstance.post('/api/user/login', {
+            user: user,
+            password: password
+        });
 
-        const {data: {data}} = result
-        return {data: data} 
+        return data;
     } catch (error) {
         console.error(error.message)
         return {
             error: true,
             message: error?.response?.data?.message || "Error in the request"
         }
-    }    
+    }
 }
 
 export async function createUserService(name, email, password) {

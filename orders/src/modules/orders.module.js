@@ -39,8 +39,8 @@ orderResponder.on(config.microservicesNameSpaces.orders.types.getOrdersListRecor
     delete req.type
 
     try {
-        const orders = await OrderModel.find({})
-        return orders.map(order => ({ order_id: order._id }))
+        const orders = await OrderModel.find({}).select(['_id', 'user_id', 'active', 'created_at'])
+        return orders
     } catch (error) {
         logger.log('error', `Couldn't get the orders from the collection in mongo`)
         return null

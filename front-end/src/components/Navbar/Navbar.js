@@ -23,7 +23,7 @@ const Navbar = (props) => {
         if(window.sessionStorage.length) {
             setToken(window.sessionStorage.getItem("jwt"));
             setIdUser(window.sessionStorage.getItem("user"));
-        }           
+        }
     }, []);
 
     const toggleCollapse = () => {
@@ -38,7 +38,7 @@ const Navbar = (props) => {
                 </MDBNavbarBrand>
                 <MDBNavbarToggler onClick={toggleCollapse} />
                 <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
-                    <MDBNavbarNav left>                    
+                    <MDBNavbarNav left>
                             <MDBNavItem>
                                 <MDBDropdown>
                                     <MDBDropdownToggle nav caret>
@@ -49,16 +49,24 @@ const Navbar = (props) => {
                                             href="/home">
                                             Inicio
                                         </MDBDropdownItem>
-                                        <MDBDropdownItem 
-                                            href="/list-user">
-                                            Usuarios
-                                        </MDBDropdownItem>                                
+                                        <MDBDropdownItem
+                                            href="/orders">
+                                            Orders
+                                        </MDBDropdownItem>
+                                        <MDBDropdownItem
+                                            href="/top-products-filter">
+                                            Top products filter
+                                        </MDBDropdownItem>
+                                        <MDBDropdownItem
+                                            href="/top-products">
+                                            Top 5 products
+                                        </MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
                             </MDBNavItem>
                         </MDBNavbarNav>
                     {token &&
-                        <MDBNavbarNav right>                    
+                        <MDBNavbarNav right>
                             <MDBNavItem>
                                 <MDBDropdown dropleft>
                                     <MDBDropdownToggle nav caret>

@@ -10,7 +10,8 @@ const config = {
             name: 'requester_products',
             key: 'products',
             types: {
-                getProducts: 'get-products'
+                getProducts: 'get-products',
+                getTopProductsByDates: 'get-top-products-by-dates',
             }
         },
         orders: {

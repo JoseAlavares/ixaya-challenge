@@ -4,13 +4,11 @@ import {
     MDBCol,
     MDBContainer,
     MDBCardTitle,
-    MDBIcon,
     MDBJumbotron,
-    MDBBtn
 } from "mdbreact";
 import Navbar from "../../components/Navbar/Navbar";
 
-const Home = (props) => {    
+const Home = (props) => {
     const location = props.location.pathname;
 
     return (
@@ -34,24 +32,15 @@ const Home = (props) => {
                                         <li>ExpressJS</li>
                                         <li>ReactJS</li>
                                         <li>NodeJS</li>
-                                    </ol>                                    
+                                    </ol>
                                     <p>Ademas se usa un contenedor docker para el back-end en NodeJS el servidor docker esta instalado en una instancia EC2 de AWS</p>
-                                    <MDBBtn 
-                                        outline 
-                                        color="white" 
-                                        className="mb-5" 
-                                        onClick={() => {props.history.push("/list-user")}}
-                                        >
-                                        <MDBIcon icon="clone" className="mr-2"></MDBIcon> 
-                                        Lista de usuarios
-                                    </MDBBtn>
-                                </MDBCol>    
-                            </MDBCol>                            
+                                </MDBCol>
+                            </MDBCol>
                         </MDBJumbotron>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
-        </Fragment>        
+        </Fragment>
     );
 };
 
